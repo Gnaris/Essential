@@ -1,6 +1,7 @@
 package Model;
 
-import SPEssential.SPEssential;
+import org.bukkit.Bukkit;
+import sperias.gnaris.SPDatabase.SPDatabase;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,8 +9,10 @@ import java.sql.SQLException;
 
 public class EssentialModel {
 
+    private final SPDatabase database = (SPDatabase) Bukkit.getServer().getPluginManager().getPlugin("SP_Database");
+
     public String getPlayer(String uuid) throws SQLException, ClassNotFoundException {
-        PreparedStatement stmt = SPEssential.getDatabase().prepareStatement("SELECT uuid FROM player WHERE uuid = ?");
+        PreparedStatement stmt = database.getConnection().prepareStatement("SELECT uuid FROM player WHERE uuid = ?");
         stmt.setString(1, uuid);
         ResultSet result = stmt.executeQuery();
         String player = null;
@@ -21,7 +24,7 @@ public class EssentialModel {
     }
 
     public void insertNewPlayer(String uuid, String name) throws SQLException, ClassNotFoundException {
-        PreparedStatement stmt = SPEssential.getDatabase().prepareStatement("INSERT INTO player VALUES (NULL, ?, ?, DEFAULT, DEFAULT)");
+        PreparedStatement stmt = database.getConnection().prepareStatement("INSERT INTO player VALUES (NULL, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT)");
         stmt.setString(1, uuid);
         stmt.setString(2, name);
         stmt.executeUpdate();

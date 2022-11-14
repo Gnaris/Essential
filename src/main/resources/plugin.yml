@@ -5,3 +5,53 @@ api-version: 1.19
 authors: [ Gnaris ]
 depend:
   - SP_Database
+commands:
+  gamemode:
+    description: "Change le mode jeu"
+    aliases: [gm]
+  enderchest:
+    description: "Ouvre l'enderchest"
+    aliases: [ec]
+  fly:
+    description: "Voler dans les airs"
+  heal:
+    description: "Soigner quelqu'un"
+  feed:
+    description: "Rassasié quelqu'un"
+  kill:
+    description: "Tue quelqu'un"
+  vanish:
+    description: "Mode invisible"
+    aliases: [v]
+  message:
+    description: "Envoie un message privé à quelqu'un"
+    aliases: [w, mp, send, m, msg]
+  spymessage:
+    description: "Espionne les messages privés"
+    aliases: [spy, spymp, spymsg]
+  teleport:
+    description: "Teleportation"
+    aliases: [tp]
+permissions:
+  sperias.essential.command.gamemode:
+    description: "Command /gamemode"
+  sperias.essential.command.enderchest:
+    description: "Command /enderchest"
+    children: [sperias.essential.command.enderchest.player]
+  sperias.essential.command.fly:
+    description: "Command /fly"
+  sperias.essential.command.heal:
+    description: "Command /heal"
+    children: [sperias.essential.command.heal.player]
+  sperias.essential.command.feed:
+    description: "Command /feed"
+    children: [sperias.essential.command.heal.player]
+  sperias.essential.command.kill:
+    description: "Command /kill"
+    children: [ sperias.essential.command.kill.player]
+  sperias.essential.command.vanish:
+    description: "Command /vanish"
+  sperias.essential.command.spymessage:
+    description: "Command /spymessage"
+  sperias.essential.command.tp:
+    description: "Command /tp"
