@@ -43,6 +43,16 @@ commands:
     aliases: [tpdeny, tpno]
   invsee:
     description: "Voir l'inventaire d'un joueur"
+  spawn:
+    description: "Se téléporter au spawn"
+  setspawn:
+    description: "Défini un nouveau spawn"
+  warp:
+    description: "Se téléporter dans un warp"
+  setwarp:
+    description: "Ajouter un nouveau warp"
+  deletewarp:
+    description: "Supprimer un warp"
 permissions:
   sperias.essential.command.gamemode:
     description: "Command /gamemode"
@@ -69,4 +79,10 @@ permissions:
   sperias.essential.command.invsee:
     description: "Command /invsee"
   sperias.essential.invsee.takeitem:
-    description: "Take item on player inventory"
+    description: "Prendre l'item du joueur dans son inventaire"
+  sperias.essential.command.setspawn:
+    description: "Command /setspawn"
+  sperias.essential.command.setwarp:
+    description: "Command /setwarp"
+  sperias.essential.command.deletewarp:
+    description: "Command /deletewarp"

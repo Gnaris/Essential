@@ -21,7 +21,6 @@ public class PlayerInvsee implements Listener {
         {
             e.setCancelled(true);
         }
-        // TODO enleve l'item de joueur de l'inventaire ou mettre un item dans l'inventaire
     }
 
     @EventHandler

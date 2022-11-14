@@ -1,0 +1,11 @@
+- [x] /spawn
+- [x] /setspawn
+- [x] /warp
+- [x] /setwarp
+- [] /seen
+- [] /back
+- [] /hat
+- [] /condense
+- [] /tempban
+- [] /mute
+- [] /kick

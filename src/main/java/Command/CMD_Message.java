@@ -1,6 +1,7 @@
 package Command;
 
 import Command.Controller.EssentialController;
+import Command.Parent.CommandFactory;
 import SPEssential.SPEssential;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -12,20 +13,17 @@ import org.yaml.snakeyaml.util.ArrayUtils;
 
 import java.util.*;
 
-public class CMD_Message implements CommandExecutor {
-
-    private SPEssential plugin;
+public class CMD_Message extends CommandFactory implements CommandExecutor {
 
     public CMD_Message(SPEssential plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(args.length > 1)
+        if(args.length > 1 && sender instanceof Player)
         {
-            if(!(sender instanceof Player)) return false;
             Player player = (Player) sender;
             EssentialController essentialController = new EssentialController(player);
             Player target = Bukkit.getPlayer(args[0]);

@@ -1,18 +1,17 @@
 package Command;
 
 import Command.Controller.EssentialController;
+import Command.Parent.CommandFactory;
 import SPEssential.SPEssential;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class CMD_SpyMessage implements CommandExecutor {
-
-    private SPEssential plugin;
+public class CMD_SpyMessage extends CommandFactory implements CommandExecutor {
 
     public CMD_SpyMessage(SPEssential plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     @Override

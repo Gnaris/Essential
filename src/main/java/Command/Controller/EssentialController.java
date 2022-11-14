@@ -1,5 +1,6 @@
 package Command.Controller;
 
+import Entity.Warp;
 import SPEssential.SPEssential;
 import org.bukkit.entity.Player;
 
@@ -25,7 +26,6 @@ public class EssentialController {
         }
         return true;
     }
-
     public boolean existingTarget(Player target)
     {
         if(target == null)
@@ -35,7 +35,6 @@ public class EssentialController {
         }
         return true;
     }
-
     public boolean haveTpRequest()
     {
         if(plugin.getPlayerTpRequest().get(player) == null)
@@ -46,6 +45,52 @@ public class EssentialController {
 
         return true;
     }
+    public boolean haveSpawnLocation()
+    {
+        if(plugin.getSpawnLocation() == null)
+        {
+            player.sendMessage("§cIl n'y a actuellement aucun spawn de disponible");
+            return false;
+        }
+
+        return true;
+    }
+    public boolean canGoToWarp(String name)
+    {
+        if(plugin.getWarpLocation().get(name) == null)
+        {
+            player.sendMessage("§cCe warp n'existe pas");
+            return false;
+        }
+        Warp warp = plugin.getWarpLocation().get(name);
+        if(warp.getPermission() != null && !player.hasPermission(warp.getPermission()))
+        {
+            player.sendMessage("§cVous n'avez pas la permission d'y aller");
+            return false;
+        }
+
+        return true;
+    }
+    public boolean canSetWarp(String name)
+    {
+        if(plugin.getWarpLocation().get(name) != null)
+        {
+            player.sendMessage("§cCe warp existe déjà");
+            return false;
+        }
+        return this.havePermission("sperias.essential.command.setwarp");
+    }
+
+    public boolean canDeleteWarp(String name)
+    {
+        if(plugin.getWarpLocation().get(name) == null)
+        {
+            player.sendMessage("§cCe warp n'existe pas");
+            return false;
+        }
+        return this.havePermission("sperias.essential.command.deletewarp");
+    }
+
 
     public boolean canSetGamemode()
     {
@@ -76,4 +121,7 @@ public class EssentialController {
     public boolean canTeleport(){return this.havePermission("sperias.essential.command.tp");}
 
     public boolean canInvsee(){return this.havePermission("sperias.essential.command.invsee");}
+
+    public boolean canSetSpawn(){return this.havePermission("sperias.essential.command.setspawn");}
+
 }
