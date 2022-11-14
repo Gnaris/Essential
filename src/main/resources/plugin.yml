@@ -32,6 +32,17 @@ commands:
   teleport:
     description: "Teleportation"
     aliases: [tp]
+  teleportto:
+    description: "Demande de téléportation"
+    aliases: [tpa, tpto, tpt]
+  teleportaccept:
+    description: "Accepte la demande de téléportation"
+    aliases: [tpaccept, tpyes]
+  teleportdeny:
+    description: "Refuse la demande de téléportation"
+    aliases: [tpdeny, tpno]
+  invsee:
+    description: "Voir l'inventaire d'un joueur"
 permissions:
   sperias.essential.command.gamemode:
     description: "Command /gamemode"
@@ -55,3 +66,7 @@ permissions:
     description: "Command /spymessage"
   sperias.essential.command.tp:
     description: "Command /tp"
+  sperias.essential.command.invsee:
+    description: "Command /invsee"
+  sperias.essential.invsee.takeitem:
+    description: "Take item on player inventory"

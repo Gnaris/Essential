@@ -1,13 +1,19 @@
 package Command.Controller;
 
+import SPEssential.SPEssential;
 import org.bukkit.entity.Player;
 
 public class EssentialController {
 
     private Player player;
+    private SPEssential plugin;
 
     public EssentialController(Player player) {
         this.player = player;
+    }
+    public EssentialController(Player player, SPEssential plugin) {
+        this.player = player;
+        this.plugin = plugin;
     }
 
     private boolean havePermission(String permission)
@@ -27,6 +33,17 @@ public class EssentialController {
             player.sendMessage("§cCe joueur n'existe pas");
             return false;
         }
+        return true;
+    }
+
+    public boolean haveTpRequest()
+    {
+        if(plugin.getPlayerTpRequest().get(player) == null)
+        {
+            player.sendMessage("§cPersonne ne vous a demandé de se téléporter à vous");
+            return false;
+        }
+
         return true;
     }
 
@@ -57,4 +74,6 @@ public class EssentialController {
     public boolean canSpyMp(){return this.havePermission("sperias.essential.command.spymessage");}
 
     public boolean canTeleport(){return this.havePermission("sperias.essential.command.tp");}
+
+    public boolean canInvsee(){return this.havePermission("sperias.essential.command.invsee");}
 }
