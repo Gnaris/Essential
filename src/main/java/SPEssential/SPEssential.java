@@ -21,6 +21,7 @@ public final class SPEssential extends JavaPlugin {
     private final List<Player> playerSpyMessage = new ArrayList<>();
     private final Map<Player, Player> playerTpRequest = new HashMap<>();
     private final List<Player> playerInvsee = new ArrayList<>();
+    private final Map<Player, Location> playerLastTeleportationLocation = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -66,16 +67,16 @@ public final class SPEssential extends JavaPlugin {
         Objects.requireNonNull(getCommand("teleportaccept")).setExecutor(new CMD_TeleportAccept(this));
         Objects.requireNonNull(getCommand("teleportdeny")).setExecutor(new CMD_TeleportDeny(this));
         Objects.requireNonNull(getCommand("invsee")).setExecutor(new CMD_Invsee(this));
-
         Objects.requireNonNull(getCommand("spawn")).setExecutor(new CMD_Spawn(this));
         Objects.requireNonNull(getCommand("setspawn")).setExecutor(new CMD_SetSpawn(this));
         Objects.requireNonNull(getCommand("warp")).setExecutor(new CMD_Warp(this));
         Objects.requireNonNull(getCommand("setwarp")).setExecutor(new CMD_SetWarp(this));
         Objects.requireNonNull(getCommand("deletewarp")).setExecutor(new CMD_DeleteWarp(this));
+        Objects.requireNonNull(getCommand("back")).setExecutor(new CMD_Back(this));
 
 
         getServer().getPluginManager().registerEvents(new PlayerManagement(), this);
-        getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeath(this), this);
         getServer().getPluginManager().registerEvents(new PlayerInvsee(this), this);
     }
 
@@ -135,6 +136,7 @@ public final class SPEssential extends JavaPlugin {
     public List<Player> getPlayerInvsee() {
         return playerInvsee;
     }
-
-
+    public Map<Player, Location> getPlayerLastTeleportationLocation() {
+        return playerLastTeleportationLocation;
+    }
 }

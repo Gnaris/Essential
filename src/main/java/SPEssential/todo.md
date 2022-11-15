@@ -3,8 +3,8 @@
 - [x] /warp
 - [x] /setwarp
 - [] /seen
-- [] /back
-- [] /hat
+- [x] /back
+- [x] /hat
 - [] /condense
 - [] /tempban
 - [] /mute

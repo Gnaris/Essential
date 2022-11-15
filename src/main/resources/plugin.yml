@@ -53,6 +53,10 @@ commands:
     description: "Ajouter un nouveau warp"
   deletewarp:
     description: "Supprimer un warp"
+  back:
+    description: "Revenir à la dernière position"
+  hat:
+    description: "Porter un nouveau chapeau"
 permissions:
   sperias.essential.command.gamemode:
     description: "Command /gamemode"
@@ -66,7 +70,7 @@ permissions:
     children: [sperias.essential.command.heal.player]
   sperias.essential.command.feed:
     description: "Command /feed"
-    children: [sperias.essential.command.heal.player]
+    children: [sperias.essential.command.feed.player]
   sperias.essential.command.kill:
     description: "Command /kill"
     children: [ sperias.essential.command.kill.player]
@@ -86,3 +90,7 @@ permissions:
     description: "Command /setwarp"
   sperias.essential.command.deletewarp:
     description: "Command /deletewarp"
+  sperias.essential.command.back:
+    description: "Command /hack"
+  sperias.essential.command.hat:
+    description: "Command /hat"

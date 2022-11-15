@@ -91,6 +91,18 @@ public class EssentialController {
         return this.havePermission("sperias.essential.command.deletewarp");
     }
 
+    public boolean canBack()
+    {
+        if(!this.havePermission("sperias.essential.command.back")) return false;
+        if(plugin.getPlayerLastTeleportationLocation().get(player) == null)
+        {
+            player.sendMessage("§cVous n'avez pas de dernière position");
+            return false;
+        }
+
+        return true;
+    }
+
 
     public boolean canSetGamemode()
     {
@@ -123,5 +135,7 @@ public class EssentialController {
     public boolean canInvsee(){return this.havePermission("sperias.essential.command.invsee");}
 
     public boolean canSetSpawn(){return this.havePermission("sperias.essential.command.setspawn");}
+
+    public boolean canHat(){return this.havePermission("sperias.essential.command.hat");}
 
 }
