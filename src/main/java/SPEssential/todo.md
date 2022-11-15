@@ -2,10 +2,10 @@
 - [x] /setspawn
 - [x] /warp
 - [x] /setwarp
-- [] /seen
 - [x] /back
 - [x] /hat
-- [] /condense
+- [x] /condense
+- [x] /craft
 - [] /tempban
 - [] /mute
 - [] /kick
