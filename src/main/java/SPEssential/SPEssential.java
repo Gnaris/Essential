@@ -1,16 +1,19 @@
 package SPEssential;
 
 import Command.*;
-import Entity.Warp;
 import Event.PlayerDeath;
 import Event.PlayerInvsee;
 import Event.PlayerManagement;
+import Event.PlayerTeleport;
+import Model.EssentialModel;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import Entity.Warp;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public final class SPEssential extends JavaPlugin {
@@ -23,9 +26,18 @@ public final class SPEssential extends JavaPlugin {
     private final List<Player> playerInvsee = new ArrayList<>();
     private final Map<Player, Location> playerLastTeleportationLocation = new HashMap<>();
 
+    private final Map<UUID, Date> playerBanned = new HashMap<>();
+
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
+
+        // TODO BAN A FAIRE
+        try {
+            new EssentialModel().getPlayerBanned();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         if(getConfig().contains("spawn"))
         {
@@ -51,8 +63,6 @@ public final class SPEssential extends JavaPlugin {
         }
 
 
-
-
         Objects.requireNonNull(getCommand("gamemode")).setExecutor(new CMD_Gamemode());
         Objects.requireNonNull(getCommand("enderchest")).setExecutor(new CMD_Enderchest());
         Objects.requireNonNull(getCommand("fly")).setExecutor(new CMD_Fly());
@@ -73,11 +83,14 @@ public final class SPEssential extends JavaPlugin {
         Objects.requireNonNull(getCommand("setwarp")).setExecutor(new CMD_SetWarp(this));
         Objects.requireNonNull(getCommand("deletewarp")).setExecutor(new CMD_DeleteWarp(this));
         Objects.requireNonNull(getCommand("back")).setExecutor(new CMD_Back(this));
-
+        Objects.requireNonNull(getCommand("hat")).setExecutor(new CMD_Hat(this));
+        Objects.requireNonNull(getCommand("condense")).setExecutor(new CMD_Condense());
+        Objects.requireNonNull(getCommand("craft")).setExecutor(new CMD_Craft());
 
         getServer().getPluginManager().registerEvents(new PlayerManagement(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeath(this), this);
         getServer().getPluginManager().registerEvents(new PlayerInvsee(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerTeleport(this), this);
     }
 
     @Override

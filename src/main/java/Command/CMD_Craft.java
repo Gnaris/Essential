@@ -8,10 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class CMD_Hat extends CommandFactory implements CommandExecutor {
-    public CMD_Hat(SPEssential plugin) {
-        super(plugin);
-    }
+public class CMD_Craft implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
@@ -20,11 +17,8 @@ public class CMD_Hat extends CommandFactory implements CommandExecutor {
             {
                 Player player = (Player) sender;
                 EssentialController essentialController = new EssentialController(player);
-                if(!essentialController.canHat()) return false;
-                player.getInventory().setHelmet(player.getInventory().getItemInMainHand());
-                player.getInventory().setItemInMainHand(null);
-                player.sendMessage("§aVoila un magnifique chapeau et tout propre !");
-                return true;
+                if(!essentialController.canCraft()) return false;
+                player.openWorkbench(player.getLocation(), true);
             }
         return false;
     }

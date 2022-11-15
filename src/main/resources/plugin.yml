@@ -57,23 +57,27 @@ commands:
     description: "Revenir à la dernière position"
   hat:
     description: "Porter un nouveau chapeau"
+  condense:
+    description: "Condense les minerais"
+  craft:
+    description: "Ouvre la table de craft"
 permissions:
   sperias.essential.command.gamemode:
     description: "Command /gamemode"
   sperias.essential.command.enderchest:
     description: "Command /enderchest"
-    children: [sperias.essential.command.enderchest.player]
+    children: [sperias.essential.command.enderchest.me]
   sperias.essential.command.fly:
     description: "Command /fly"
   sperias.essential.command.heal:
     description: "Command /heal"
-    children: [sperias.essential.command.heal.player]
+    children: [sperias.essential.command.heal.me]
   sperias.essential.command.feed:
     description: "Command /feed"
-    children: [sperias.essential.command.feed.player]
+    children: [sperias.essential.command.feed.me]
   sperias.essential.command.kill:
     description: "Command /kill"
-    children: [ sperias.essential.command.kill.player]
+    children: [ sperias.essential.command.kill.me]
   sperias.essential.command.vanish:
     description: "Command /vanish"
   sperias.essential.command.spymessage:
@@ -91,6 +95,10 @@ permissions:
   sperias.essential.command.deletewarp:
     description: "Command /deletewarp"
   sperias.essential.command.back:
-    description: "Command /hack"
+    description: "Command /back"
   sperias.essential.command.hat:
     description: "Command /hat"
+  sperias.essential.command.condense:
+    description: "Command /condense"
+  sperias.essential.command.craft:
+    description: "Command /craft"
