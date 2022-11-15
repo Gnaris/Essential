@@ -32,7 +32,7 @@ public final class SPEssential extends JavaPlugin {
     public void onEnable() {
         this.saveDefaultConfig();
 
-        // TODO BAN A FAIRE
+        // TODO BAN A FAIREs
         try {
             new EssentialModel().getPlayerBanned();
         } catch (SQLException | ClassNotFoundException e) {
