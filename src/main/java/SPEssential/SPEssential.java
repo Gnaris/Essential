@@ -1,17 +1,21 @@
 package SPEssential;
 
-import Command.*;
-import Event.PlayerDeath;
-import Event.PlayerInvsee;
-import Event.PlayerManagement;
-import Event.PlayerTeleport;
-import Model.EssentialModel;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import Entity.Warp;
+import sperias.essential.command.cmd_entertainment.*;
+import sperias.essential.command.cmd_message.CMD_Message;
+import sperias.essential.command.cmd_message.CMD_SpyMessage;
+import sperias.essential.command.cmd_teleportation.*;
+import sperias.essential.command.cmd_teleportation.building.*;
+import sperias.essential.entity.Warp;
+import sperias.essential.event.PlayerDeath;
+import sperias.essential.event.PlayerInvsee;
+import sperias.essential.event.PlayerJoin;
+import sperias.essential.event.PlayerTeleport;
+import sperias.essential.event.model.PunishmentModel;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -29,16 +33,10 @@ public final class SPEssential extends JavaPlugin {
 
     private Map<UUID, Timestamp> playerBanned;
 
+
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
-
-        // TODO BAN A FAIREs
-        try {
-            playerBanned = new EssentialModel().getPlayerBanned();
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
         if(getConfig().contains("spawn"))
         {
@@ -48,7 +46,6 @@ public final class SPEssential extends JavaPlugin {
                     getConfig().getDouble("spawn.y"),
                     getConfig().getDouble("spawn.z"));
         }
-
         if(getConfig().contains("warps"))
         {
             for(String key : Objects.requireNonNull(getConfig().getConfigurationSection("warps")).getKeys(false))
@@ -63,6 +60,8 @@ public final class SPEssential extends JavaPlugin {
             }
         }
 
+        try { playerBanned = new PunishmentModel().getPlayerBanned();} catch (SQLException | ClassNotFoundException e) {throw new RuntimeException(e);}
+
 
         Objects.requireNonNull(getCommand("gamemode")).setExecutor(new CMD_Gamemode());
         Objects.requireNonNull(getCommand("enderchest")).setExecutor(new CMD_Enderchest());
@@ -73,22 +72,22 @@ public final class SPEssential extends JavaPlugin {
         Objects.requireNonNull(getCommand("vanish")).setExecutor(new CMD_Vanish());
         Objects.requireNonNull(getCommand("message")).setExecutor(new CMD_Message(this));
         Objects.requireNonNull(getCommand("spymessage")).setExecutor(new CMD_SpyMessage(this));
-        Objects.requireNonNull(getCommand("teleport")).setExecutor(new CMD_Teleport());
-        Objects.requireNonNull(getCommand("teleportto")).setExecutor(new CMD_TeleportTo(this));
-        Objects.requireNonNull(getCommand("teleportaccept")).setExecutor(new CMD_TeleportAccept(this));
-        Objects.requireNonNull(getCommand("teleportdeny")).setExecutor(new CMD_TeleportDeny(this));
+        Objects.requireNonNull(getCommand("teleport")).setExecutor(new Teleport());
+        Objects.requireNonNull(getCommand("teleportto")).setExecutor(new TeleportTo(this));
+        Objects.requireNonNull(getCommand("teleportaccept")).setExecutor(new TeleportAccept(this));
+        Objects.requireNonNull(getCommand("teleportdeny")).setExecutor(new TeleportDeny(this));
         Objects.requireNonNull(getCommand("invsee")).setExecutor(new CMD_Invsee(this));
         Objects.requireNonNull(getCommand("spawn")).setExecutor(new CMD_Spawn(this));
         Objects.requireNonNull(getCommand("setspawn")).setExecutor(new CMD_SetSpawn(this));
         Objects.requireNonNull(getCommand("warp")).setExecutor(new CMD_Warp(this));
         Objects.requireNonNull(getCommand("setwarp")).setExecutor(new CMD_SetWarp(this));
         Objects.requireNonNull(getCommand("deletewarp")).setExecutor(new CMD_DeleteWarp(this));
-        Objects.requireNonNull(getCommand("back")).setExecutor(new CMD_Back(this));
+        Objects.requireNonNull(getCommand("back")).setExecutor(new Back(this));
         Objects.requireNonNull(getCommand("hat")).setExecutor(new CMD_Hat(this));
         Objects.requireNonNull(getCommand("condense")).setExecutor(new CMD_Condense());
         Objects.requireNonNull(getCommand("craft")).setExecutor(new CMD_Craft());
 
-        getServer().getPluginManager().registerEvents(new PlayerManagement(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
         getServer().getPluginManager().registerEvents(new PlayerDeath(this), this);
         getServer().getPluginManager().registerEvents(new PlayerInvsee(this), this);
         getServer().getPluginManager().registerEvents(new PlayerTeleport(this), this);

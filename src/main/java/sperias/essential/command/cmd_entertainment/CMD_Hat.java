@@ -1,0 +1,31 @@
+package sperias.essential.command.cmd_entertainment;
+
+import SPEssential.SPEssential;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import sperias.essential.command.CommandFactory;
+import sperias.essential.command.controller.EntertainmentController;
+
+public class CMD_Hat extends CommandFactory implements CommandExecutor {
+    public CMD_Hat(SPEssential plugin) {
+        super(plugin);
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+
+            if(args.length == 0 && sender instanceof Player)
+            {
+                Player player = (Player) sender;
+                EntertainmentController entertainmentController = new EntertainmentController(player);
+                if(!entertainmentController.canHat()) return false;
+                player.getInventory().setHelmet(player.getInventory().getItemInMainHand());
+                player.getInventory().setItemInMainHand(null);
+                player.sendMessage("§aVoila un magnifique chapeau et tout propre !");
+                return true;
+            }
+        return false;
+    }
+}
