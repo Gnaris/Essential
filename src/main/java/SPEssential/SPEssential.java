@@ -14,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import Entity.Warp;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.*;
 
 public final class SPEssential extends JavaPlugin {
@@ -26,7 +27,7 @@ public final class SPEssential extends JavaPlugin {
     private final List<Player> playerInvsee = new ArrayList<>();
     private final Map<Player, Location> playerLastTeleportationLocation = new HashMap<>();
 
-    private final Map<UUID, Date> playerBanned = new HashMap<>();
+    private Map<UUID, Timestamp> playerBanned;
 
     @Override
     public void onEnable() {
@@ -34,7 +35,7 @@ public final class SPEssential extends JavaPlugin {
 
         // TODO BAN A FAIREs
         try {
-            new EssentialModel().getPlayerBanned();
+            playerBanned = new EssentialModel().getPlayerBanned();
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -87,7 +88,7 @@ public final class SPEssential extends JavaPlugin {
         Objects.requireNonNull(getCommand("condense")).setExecutor(new CMD_Condense());
         Objects.requireNonNull(getCommand("craft")).setExecutor(new CMD_Craft());
 
-        getServer().getPluginManager().registerEvents(new PlayerManagement(), this);
+        getServer().getPluginManager().registerEvents(new PlayerManagement(this), this);
         getServer().getPluginManager().registerEvents(new PlayerDeath(this), this);
         getServer().getPluginManager().registerEvents(new PlayerInvsee(this), this);
         getServer().getPluginManager().registerEvents(new PlayerTeleport(this), this);
@@ -151,5 +152,8 @@ public final class SPEssential extends JavaPlugin {
     }
     public Map<Player, Location> getPlayerLastTeleportationLocation() {
         return playerLastTeleportationLocation;
+    }
+    public Map<UUID, Timestamp> getPlayerBanned() {
+        return playerBanned;
     }
 }

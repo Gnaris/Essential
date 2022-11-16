@@ -6,7 +6,9 @@ import sperias.gnaris.SPDatabase.SPDatabase;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -33,12 +35,14 @@ public class EssentialModel {
         stmt.executeUpdate();
     }
 
-    public void getPlayerBanned() throws SQLException, ClassNotFoundException {
-        PreparedStatement stmt = database.getConnection().prepareStatement("SELECT name, banned, banExpiration FROM ban_list");
+    public Map<UUID, Timestamp> getPlayerBanned() throws SQLException, ClassNotFoundException {
+        PreparedStatement stmt = database.getConnection().prepareStatement("SELECT uuid, banExpiration FROM ban_list");
         ResultSet result = stmt.executeQuery();
+        Map<UUID, Timestamp> playerBanned = new HashMap<>();
         while(result.next())
         {
-            System.out.println(result.getString("n"));
+            playerBanned.put(UUID.fromString(result.getString("uuid")), result.getTimestamp("banExpiration"));
         }
+        return playerBanned;
     }
 }
