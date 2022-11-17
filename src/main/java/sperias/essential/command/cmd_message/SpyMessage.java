@@ -1,21 +1,20 @@
 package sperias.essential.command.cmd_message;
 
 import SPEssential.SPEssential;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import sperias.essential.command.CommandFactory;
+import sperias.essential.command.Command;
 import sperias.essential.command.controller.MessageController;
 
-public class CMD_SpyMessage extends CommandFactory implements CommandExecutor {
+public class SpyMessage extends Command implements CommandExecutor {
 
-    public CMD_SpyMessage(SPEssential plugin) {
+    public SpyMessage(SPEssential plugin) {
         super(plugin);
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
 
         if(!(sender instanceof Player)) return false;
         Player player = (Player) sender;

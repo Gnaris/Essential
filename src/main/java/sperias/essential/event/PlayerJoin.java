@@ -8,11 +8,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
-import sperias.essential.event.model.PlayerJoinModel;
+import sperias.essential.event.Controller.PlayerPunishmentController;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -20,30 +19,36 @@ import java.util.UUID;
 public class PlayerJoin implements Listener {
 
     private SPEssential plugin;
-    private Map<UUID, Boolean> isNewPlayer = new HashMap<>();
+    private PlayerJoinController playerJoinController;
+    private PlayerPunishmentController playerPunishmentController;
+    private Map<UUID, Boolean> newPlayer = new HashMap<>();
 
     public PlayerJoin(SPEssential plugin) {
         this.plugin = plugin;
+        this.playerJoinController = new PlayerJoinController(plugin);
+        this.playerPunishmentController = new PlayerPunishmentController(plugin);
     }
 
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onLogin(PlayerLoginEvent e) throws SQLException, ClassNotFoundException {
-        if(plugin.getPlayerBanned().containsKey(e.getPlayer().getUniqueId()))
+        if(playerPunishmentController.isBanned(e.getPlayer().getUniqueId()))
         {
-            Timestamp time = plugin.getPlayerBanned().get(e.getPlayer().getUniqueId());
             e.setResult(Result.KICK_BANNED);
-            e.setKickMessage("§cVous êtes bannis du serveur ! \n\n\n\n\n §cVous êtes bannis du serveurs !");
+            e.setKickMessage("§cVous êtes banni du serveur");
             return;
         }
-        if(!new PlayerJoinController().isNewPlayer(e.getPlayer().getUniqueId().toString())) return;
-        new PlayerJoinModel().insertNewPlayer(e.getPlayer().getUniqueId().toString(), e.getPlayer().getName());
-        isNewPlayer.put(e.getPlayer().getUniqueId(), true);
+        if(playerJoinController.isNewPlayer(e.getPlayer().getUniqueId(), e.getPlayer().getName()))
+        {
+            newPlayer.put(e.getPlayer().getUniqueId(), true);
+        }
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
-        if(isNewPlayer.get(e.getPlayer().getUniqueId()) == null)  return;
-        Bukkit.broadcastMessage("Bienvenue " + e.getPlayer().getName() + " sur le serveur Sperias");
-        isNewPlayer.remove(e.getPlayer().getUniqueId());
+        if(newPlayer.containsKey(e.getPlayer().getUniqueId()))
+        {
+            Bukkit.broadcastMessage("Bienvenue " + e.getPlayer().getName() + " sur le serveur Sperias");
+            newPlayer.remove(e.getPlayer().getUniqueId());
+        }
     }
 }

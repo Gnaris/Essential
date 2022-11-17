@@ -11,7 +11,7 @@ import sperias.essential.command.controller.EntertainmentController;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class CMD_Condense implements CommandExecutor {
+public class Condense implements CommandExecutor {
 
 
     @Override

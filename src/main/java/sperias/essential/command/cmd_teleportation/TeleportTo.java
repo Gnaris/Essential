@@ -2,14 +2,13 @@ package sperias.essential.command.cmd_teleportation;
 
 import SPEssential.SPEssential;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import sperias.essential.command.CommandFactory;
+import sperias.essential.command.Command;
 import sperias.essential.command.controller.TeleportationController;
 
-public class TeleportTo extends CommandFactory implements CommandExecutor {
+public class TeleportTo extends Command implements CommandExecutor {
 
 
     public TeleportTo(SPEssential plugin) {
@@ -17,7 +16,7 @@ public class TeleportTo extends CommandFactory implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
 
         if(args.length == 1 && !(sender instanceof Player))
         {

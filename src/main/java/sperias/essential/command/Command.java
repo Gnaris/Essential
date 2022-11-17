@@ -2,11 +2,11 @@ package sperias.essential.command;
 
 import SPEssential.SPEssential;
 
-public abstract class CommandFactory {
+public abstract class Command {
 
     protected SPEssential plugin;
 
-    public CommandFactory(SPEssential plugin) {
+    public Command(SPEssential plugin) {
         this.plugin = plugin;
     }
 }

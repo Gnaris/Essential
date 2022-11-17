@@ -7,29 +7,28 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import sperias.essential.command.controller.EntertainmentController;
 
-public class CMD_Feed implements CommandExecutor {
+public class Enderchest implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if(!(sender instanceof Player)) return false;
         Player player = (Player) sender;
         EntertainmentController entertainmentController = new EntertainmentController(player);
-        if(args.length == 0 && entertainmentController.canFeed())
+
+        if(args.length == 0 && entertainmentController.canWatchEnderchest())
         {
-            player.setFoodLevel(20);
-            player.sendMessage("§aVous êtes rassasié");
+            player.openInventory(player.getEnderChest());
             return true;
         }
 
-        if(args.length == 1 && entertainmentController.canFeedPlayer())
+        if(args.length == 1 && entertainmentController.canWatchPlayerEnderchest())
         {
             Player target = Bukkit.getPlayer(args[0]);
             if(!entertainmentController.existingTarget(target)) return false;
-            target.setFoodLevel(20);
-            player.sendMessage("§a" + target.getName() + " est rassasié");
-            target.sendMessage("§aVous êtes rassasié");
+            player.openInventory(target.getEnderChest());
             return true;
         }
+
         return false;
     }
 }

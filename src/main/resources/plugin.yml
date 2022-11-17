@@ -61,6 +61,9 @@ commands:
     description: "Condense les minerais"
   craft:
     description: "Ouvre la table de craft"
+  tempban:
+    description: "Bannir un joueur"
+    usage: "/ban {nom} {prenom} {année} {mois} {jour} {heure} {minute} {seconde}"
 permissions:
   sperias.essential.command.gamemode:
     description: "Command /gamemode"
@@ -102,3 +105,5 @@ permissions:
     description: "Command /condense"
   sperias.essential.command.craft:
     description: "Command /craft"
+  sperias.essential.command.ban:
+    description: "Command /tempban"

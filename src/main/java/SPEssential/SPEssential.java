@@ -6,8 +6,9 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import sperias.essential.command.cmd_entertainment.*;
-import sperias.essential.command.cmd_message.CMD_Message;
-import sperias.essential.command.cmd_message.CMD_SpyMessage;
+import sperias.essential.command.cmd_message.Message;
+import sperias.essential.command.cmd_message.SpyMessage;
+import sperias.essential.command.cmd_punishment.TempBan;
 import sperias.essential.command.cmd_teleportation.*;
 import sperias.essential.command.cmd_teleportation.building.*;
 import sperias.essential.entity.Warp;
@@ -18,7 +19,6 @@ import sperias.essential.event.PlayerTeleport;
 import sperias.essential.event.model.PunishmentModel;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.*;
 
 public final class SPEssential extends JavaPlugin {
@@ -31,7 +31,7 @@ public final class SPEssential extends JavaPlugin {
     private final List<Player> playerInvsee = new ArrayList<>();
     private final Map<Player, Location> playerLastTeleportationLocation = new HashMap<>();
 
-    private Map<UUID, Timestamp> playerBanned;
+    private Map<UUID, Date> playerBanned;
 
 
     @Override
@@ -63,29 +63,30 @@ public final class SPEssential extends JavaPlugin {
         try { playerBanned = new PunishmentModel().getPlayerBanned();} catch (SQLException | ClassNotFoundException e) {throw new RuntimeException(e);}
 
 
-        Objects.requireNonNull(getCommand("gamemode")).setExecutor(new CMD_Gamemode());
-        Objects.requireNonNull(getCommand("enderchest")).setExecutor(new CMD_Enderchest());
-        Objects.requireNonNull(getCommand("fly")).setExecutor(new CMD_Fly());
-        Objects.requireNonNull(getCommand("heal")).setExecutor(new CMD_Heal());
-        Objects.requireNonNull(getCommand("feed")).setExecutor(new CMD_Feed());
-        Objects.requireNonNull(getCommand("kill")).setExecutor(new CMD_Kill());
-        Objects.requireNonNull(getCommand("vanish")).setExecutor(new CMD_Vanish());
-        Objects.requireNonNull(getCommand("message")).setExecutor(new CMD_Message(this));
-        Objects.requireNonNull(getCommand("spymessage")).setExecutor(new CMD_SpyMessage(this));
+        Objects.requireNonNull(getCommand("gamemode")).setExecutor(new Gamemode());
+        Objects.requireNonNull(getCommand("enderchest")).setExecutor(new Enderchest());
+        Objects.requireNonNull(getCommand("fly")).setExecutor(new Fly());
+        Objects.requireNonNull(getCommand("heal")).setExecutor(new Heal());
+        Objects.requireNonNull(getCommand("feed")).setExecutor(new Feed());
+        Objects.requireNonNull(getCommand("kill")).setExecutor(new Kill());
+        Objects.requireNonNull(getCommand("vanish")).setExecutor(new Vanish());
+        Objects.requireNonNull(getCommand("message")).setExecutor(new Message(this));
+        Objects.requireNonNull(getCommand("spymessage")).setExecutor(new SpyMessage(this));
         Objects.requireNonNull(getCommand("teleport")).setExecutor(new Teleport());
         Objects.requireNonNull(getCommand("teleportto")).setExecutor(new TeleportTo(this));
         Objects.requireNonNull(getCommand("teleportaccept")).setExecutor(new TeleportAccept(this));
         Objects.requireNonNull(getCommand("teleportdeny")).setExecutor(new TeleportDeny(this));
-        Objects.requireNonNull(getCommand("invsee")).setExecutor(new CMD_Invsee(this));
+        Objects.requireNonNull(getCommand("invsee")).setExecutor(new InventorySee(this));
         Objects.requireNonNull(getCommand("spawn")).setExecutor(new CMD_Spawn(this));
         Objects.requireNonNull(getCommand("setspawn")).setExecutor(new CMD_SetSpawn(this));
         Objects.requireNonNull(getCommand("warp")).setExecutor(new CMD_Warp(this));
         Objects.requireNonNull(getCommand("setwarp")).setExecutor(new CMD_SetWarp(this));
         Objects.requireNonNull(getCommand("deletewarp")).setExecutor(new CMD_DeleteWarp(this));
         Objects.requireNonNull(getCommand("back")).setExecutor(new Back(this));
-        Objects.requireNonNull(getCommand("hat")).setExecutor(new CMD_Hat(this));
-        Objects.requireNonNull(getCommand("condense")).setExecutor(new CMD_Condense());
-        Objects.requireNonNull(getCommand("craft")).setExecutor(new CMD_Craft());
+        Objects.requireNonNull(getCommand("hat")).setExecutor(new Hat(this));
+        Objects.requireNonNull(getCommand("condense")).setExecutor(new Condense());
+        Objects.requireNonNull(getCommand("craft")).setExecutor(new Craft());
+        Objects.requireNonNull(getCommand("tempban")).setExecutor(new TempBan(this));
 
         getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
         getServer().getPluginManager().registerEvents(new PlayerDeath(this), this);
@@ -152,7 +153,7 @@ public final class SPEssential extends JavaPlugin {
     public Map<Player, Location> getPlayerLastTeleportationLocation() {
         return playerLastTeleportationLocation;
     }
-    public Map<UUID, Timestamp> getPlayerBanned() {
+    public Map<UUID, Date> getPlayerBanned() {
         return playerBanned;
     }
 }

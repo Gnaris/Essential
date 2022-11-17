@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import sperias.essential.command.controller.EntertainmentController;
 
-public class CMD_Gamemode implements CommandExecutor {
+public class Gamemode implements CommandExecutor {
 
 
     @Override

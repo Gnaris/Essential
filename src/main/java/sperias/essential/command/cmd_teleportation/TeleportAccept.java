@@ -1,21 +1,20 @@
 package sperias.essential.command.cmd_teleportation;
 
 import SPEssential.SPEssential;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import sperias.essential.command.CommandFactory;
+import sperias.essential.command.Command;
 import sperias.essential.command.controller.TeleportationController;
 
-public class TeleportAccept extends CommandFactory implements CommandExecutor {
+public class TeleportAccept extends Command implements CommandExecutor {
 
     public TeleportAccept(SPEssential plugin) {
         super(plugin);
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
 
         if(args.length == 0 && !(sender instanceof Player))
         {
