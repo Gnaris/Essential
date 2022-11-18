@@ -1,4 +1,4 @@
-package sperias.essential.event.model;
+package sperias.essential.model;
 
 import org.bukkit.Bukkit;
 import sperias.gnaris.SPDatabase.SPDatabase;
@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PlayerJoinModel {
+public class PlayerModel {
 
     private final SPDatabase database = (SPDatabase) Bukkit.getServer().getPluginManager().getPlugin("SP_Database");
 

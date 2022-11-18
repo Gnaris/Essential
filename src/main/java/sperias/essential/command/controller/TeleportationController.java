@@ -4,21 +4,21 @@ import SPEssential.SPEssential;
 import org.bukkit.entity.Player;
 import sperias.essential.entity.Warp;
 
-public class TeleportationController extends ControllerFactory{
+public class TeleportationController extends Controller {
 
-    public TeleportationController(Player player) {
-        super(player);
+    public TeleportationController(Player sender) {
+        super(sender);
     }
 
-    public TeleportationController(Player player, SPEssential plugin) {
-        super(player, plugin);
+    public TeleportationController(Player sender, SPEssential plugin) {
+        super(sender, plugin);
     }
 
     public boolean haveTpRequest()
     {
-        if(plugin.getPlayerTpRequest().get(player) == null)
+        if(plugin.getPlayerTpRequest().get((Player) sender) == null)
         {
-            player.sendMessage("§cPersonne ne vous a demandé de se téléporter à vous");
+            sender.sendMessage("§cPersonne ne vous a demandé de se téléporter à vous");
             return false;
         }
 
@@ -29,7 +29,7 @@ public class TeleportationController extends ControllerFactory{
     {
         if(plugin.getSpawnLocation() == null)
         {
-            player.sendMessage("§cIl n'y a actuellement aucun spawn de disponible");
+            sender.sendMessage("§cIl n'y a actuellement aucun spawn de disponible");
             return false;
         }
 
@@ -40,13 +40,13 @@ public class TeleportationController extends ControllerFactory{
     {
         if(plugin.getWarpLocation().get(name) == null)
         {
-            player.sendMessage("§cCe warp n'existe pas");
+            sender.sendMessage("§cCe warp n'existe pas");
             return false;
         }
         Warp warp = plugin.getWarpLocation().get(name);
-        if(warp.getPermission() != null && !player.hasPermission(warp.getPermission()))
+        if(warp.getPermission() != null && !sender.hasPermission(warp.getPermission()))
         {
-            player.sendMessage("§cVous n'avez pas la permission d'y aller");
+            sender.sendMessage("§cVous n'avez pas la permission d'y aller");
             return false;
         }
 
@@ -57,7 +57,7 @@ public class TeleportationController extends ControllerFactory{
     {
         if(plugin.getWarpLocation().get(name) != null)
         {
-            player.sendMessage("§cCe warp existe déjà");
+            sender.sendMessage("§cCe warp existe déjà");
             return false;
         }
         return this.havePermission("sperias.essential.command.setwarp");
@@ -67,7 +67,7 @@ public class TeleportationController extends ControllerFactory{
     {
         if(plugin.getWarpLocation().get(name) == null)
         {
-            player.sendMessage("§cCe warp n'existe pas");
+            sender.sendMessage("§cCe warp n'existe pas");
             return false;
         }
         return this.havePermission("sperias.essential.command.deletewarp");
@@ -76,9 +76,9 @@ public class TeleportationController extends ControllerFactory{
     public boolean canBack()
     {
         if(!this.havePermission("sperias.essential.command.back")) return false;
-        if(plugin.getPlayerLastTeleportationLocation().get(player) == null)
+        if(plugin.getPlayerLastTeleportationLocation().get((Player) sender) == null)
         {
-            player.sendMessage("§cVous n'avez pas de dernière position");
+            sender.sendMessage("§cVous n'avez pas de dernière position");
             return false;
         }
 

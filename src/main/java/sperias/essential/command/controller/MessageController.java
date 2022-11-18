@@ -3,7 +3,7 @@ package sperias.essential.command.controller;
 import SPEssential.SPEssential;
 import org.bukkit.entity.Player;
 
-public class MessageController extends ControllerFactory{
+public class MessageController extends Controller {
     public MessageController(Player player) {
         super(player);
     }

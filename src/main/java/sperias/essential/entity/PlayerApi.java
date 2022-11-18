@@ -41,7 +41,6 @@ public class PlayerApi {
         if(con.getResponseCode() == HttpURLConnection.HTTP_OK)
         {
             BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String line = null;
             Gson gson = new Gson();
             return gson.fromJson(reader.readLine(), PlayerApi.class);
         }

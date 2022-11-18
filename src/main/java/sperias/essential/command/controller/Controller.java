@@ -1,27 +1,28 @@
 package sperias.essential.command.controller;
 
 import SPEssential.SPEssential;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public abstract class ControllerFactory{
+public abstract class Controller {
 
-    protected Player player;
+    protected CommandSender sender;
     protected SPEssential plugin;
 
-    public ControllerFactory(Player player) {
-        this.player = player;
+    public Controller(CommandSender sender) {
+        this.sender = sender;
     }
 
-    public ControllerFactory(Player player, SPEssential plugin) {
-        this.player = player;
+    public Controller(CommandSender sender, SPEssential plugin) {
+        this.sender = sender;
         this.plugin = plugin;
     }
 
     protected boolean havePermission(String permission)
     {
-        if(!player.hasPermission(permission) && !player.isOp())
+        if(!sender.hasPermission(permission) && !sender.isOp())
         {
-            player.sendMessage("§cVous n'avez pas les permission");
+            sender.sendMessage("§cVous n'avez pas les permission");
             return false;
         }
         return true;
@@ -31,7 +32,7 @@ public abstract class ControllerFactory{
     {
         if(target == null)
         {
-            player.sendMessage("§cCe joueur n'existe pas");
+            sender.sendMessage("§cCe joueur n'existe pas");
             return false;
         }
         return true;

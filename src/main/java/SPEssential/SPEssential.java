@@ -8,15 +8,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import sperias.essential.command.cmd_entertainment.*;
 import sperias.essential.command.cmd_message.Message;
 import sperias.essential.command.cmd_message.SpyMessage;
-import sperias.essential.command.cmd_punishment.TempBan;
+import sperias.essential.command.cmd_punishment.Ban;
+import sperias.essential.command.cmd_punishment.Unban;
 import sperias.essential.command.cmd_teleportation.*;
 import sperias.essential.command.cmd_teleportation.building.*;
 import sperias.essential.entity.Warp;
-import sperias.essential.event.PlayerDeath;
-import sperias.essential.event.PlayerInvsee;
-import sperias.essential.event.PlayerJoin;
-import sperias.essential.event.PlayerTeleport;
-import sperias.essential.event.model.PunishmentModel;
+import sperias.essential.event.*;
+import sperias.essential.model.PunishmentModel;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -31,7 +29,7 @@ public final class SPEssential extends JavaPlugin {
     private final List<Player> playerInvsee = new ArrayList<>();
     private final Map<Player, Location> playerLastTeleportationLocation = new HashMap<>();
 
-    private Map<UUID, Date> playerBanned;
+    private Map<UUID, sperias.essential.entity.Ban> playerBanned;
 
 
     @Override
@@ -86,12 +84,14 @@ public final class SPEssential extends JavaPlugin {
         Objects.requireNonNull(getCommand("hat")).setExecutor(new Hat(this));
         Objects.requireNonNull(getCommand("condense")).setExecutor(new Condense());
         Objects.requireNonNull(getCommand("craft")).setExecutor(new Craft());
-        Objects.requireNonNull(getCommand("tempban")).setExecutor(new TempBan(this));
+        Objects.requireNonNull(getCommand("ban")).setExecutor(new Ban(this));
+        Objects.requireNonNull(getCommand("unban")).setExecutor(new Unban(this));
 
         getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
         getServer().getPluginManager().registerEvents(new PlayerDeath(this), this);
         getServer().getPluginManager().registerEvents(new PlayerInvsee(this), this);
         getServer().getPluginManager().registerEvents(new PlayerTeleport(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerChatTab(), this);
     }
 
     @Override
@@ -153,7 +153,7 @@ public final class SPEssential extends JavaPlugin {
     public Map<Player, Location> getPlayerLastTeleportationLocation() {
         return playerLastTeleportationLocation;
     }
-    public Map<UUID, Date> getPlayerBanned() {
+    public Map<UUID, sperias.essential.entity.Ban> getPlayerBanned() {
         return playerBanned;
     }
 }

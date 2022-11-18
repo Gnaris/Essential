@@ -1,56 +1,46 @@
 package sperias.essential.command.controller;
 
 import SPEssential.SPEssential;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
-import sperias.essential.command.model.PunishmentModel;
+import org.bukkit.command.CommandSender;
+import sperias.essential.model.PunishmentModel;
 import sperias.essential.entity.PlayerApi;
 
-import java.io.Console;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.UUID;
 
-public class PunishmentController{
+public class PunishmentController extends Controller{
 
-    private ConsoleCommandSender console;
-
-    public PunishmentController(ConsoleCommandSender console)
-    {
-        this.console = console;
+    public PunishmentController(CommandSender sender) {
+        super(sender);
+    }
+    public PunishmentController(CommandSender sender, SPEssential plugin) {
+        super(sender, plugin);
     }
 
-    public boolean canBan(Player target, String name, Timestamp date, String reason) throws SQLException, ClassNotFoundException {
-        //if(!this.havePermission("sperias.essential.command.ban")) return false;
-        UUID targetUUID = null;
-        if(target == null)
+    public boolean canBan(PlayerApi playerApi, Timestamp date, String reason){
+        if(!this.havePermission("sperias.essential.command.bannissement"))
         {
-            try {
-                if(PlayerApi.fetchPlayerAPI(name) == null)
-                {
-                    console.sendMessage("§cCe joueur n'existe pas !");
-                    return false;
-                }
-                else
-                {
-                    targetUUID = PlayerApi.fetchPlayerAPI(name).getUUID();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            sender.sendMessage("§cVous n'avez pas les permissions");
+            return false;
+        }
+        if(playerApi == null)
+        {
+            sender.sendMessage("§cCe joueur n'existe pas");
+            return false;
+        }
+        new PunishmentModel().insertPlayerBanned(sender, playerApi.getUUID().toString(), date, reason);
+        return true;
+    }
+
+    public boolean canUnban(PlayerApi playerApi)
+    {
+        if(!this.havePermission("sperias.essential.command.bannissement")) return false;
+        if(playerApi == null)
+        {
+            sender.sendMessage("§cCe joueur n'existe pas");
+            return false;
         }
 
-        PunishmentModel punishmentModel = new PunishmentModel();
-        if(target == null)
-        {
-            punishmentModel.insertPlayerBanned(targetUUID.toString(), date, reason);
-        }
-        else
-        {
-            punishmentModel.insertPlayerBanned(target.getUniqueId().toString(), date, reason);
-        }
+        new PunishmentModel().deletePlayerBanned(playerApi.getUUID().toString());
         return true;
     }
 }

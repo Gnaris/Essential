@@ -5,7 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class EntertainmentController extends ControllerFactory{
+public class EntertainmentController extends Controller {
 
     public EntertainmentController(Player player) {
         super(player);
@@ -19,18 +19,18 @@ public class EntertainmentController extends ControllerFactory{
         if(!this.havePermission("sperias.essential.command.condense")) return false;
         if(block == null)
         {
-            player.sendMessage("§cCette item n'est pas condensable. Voici la liste : ");
-            player.sendMessage("§7Charbon§r, §7L'ingot de cuivre§r, §7L'ingot de fer§r, §7Lapis Lazulis§r, §7Redstone§r, §7Pépite d'or§r, §7L'ingot d'or§r, §7Diamant§r,  §7Émeraude§r, §7Quartz§r,");
+            sender.sendMessage("§cCette item n'est pas condensable. Voici la liste : ");
+            sender.sendMessage("§7Charbon§r, §7L'ingot de cuivre§r, §7L'ingot de fer§r, §7Lapis Lazulis§r, §7Redstone§r, §7Pépite d'or§r, §7L'ingot d'or§r, §7Diamant§r,  §7Émeraude§r, §7Quartz§r,");
             return false;
         }
         if(nbOreInventory < 9 && block.getType() != Material.QUARTZ_BLOCK)
         {
-            player.sendMessage("§cVous en avez pas assez pour condenser. Minimum : 9");
+            sender.sendMessage("§cVous en avez pas assez pour condenser. Minimum : 9");
             return false;
         }
         if(nbOreInventory < 4 && block.getType() == Material.QUARTZ_BLOCK)
         {
-            player.sendMessage("§cVous en avez pas assez pour condenser. Minimum : 4");
+            sender.sendMessage("§cVous en avez pas assez pour condenser. Minimum : 4");
             return false;
         }
         return true;
