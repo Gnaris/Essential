@@ -2,16 +2,18 @@ package sperias.essential.command.controller;
 
 import SPEssential.SPEssential;
 import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class EntertainmentController extends Controller {
 
-    public EntertainmentController(Player player) {
-        super(player);
+    public EntertainmentController(CommandSender sender) {
+        super(sender);
     }
-    public EntertainmentController(Player player, SPEssential plugin) {
-        super(player, plugin);
+
+    public EntertainmentController(CommandSender sender, SPEssential plugin) {
+        super(sender, plugin);
     }
 
     public boolean canCondense(ItemStack block, int nbOreInventory)

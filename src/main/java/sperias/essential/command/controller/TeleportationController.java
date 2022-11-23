@@ -1,16 +1,18 @@
 package sperias.essential.command.controller;
 
 import SPEssential.SPEssential;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import sperias.essential.entity.Warp;
 
 public class TeleportationController extends Controller {
 
-    public TeleportationController(Player sender) {
+
+    public TeleportationController(CommandSender sender) {
         super(sender);
     }
 
-    public TeleportationController(Player sender, SPEssential plugin) {
+    public TeleportationController(CommandSender sender, SPEssential plugin) {
         super(sender, plugin);
     }
 

@@ -91,7 +91,6 @@ public final class SPEssential extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerDeath(this), this);
         getServer().getPluginManager().registerEvents(new PlayerInvsee(this), this);
         getServer().getPluginManager().registerEvents(new PlayerTeleport(this), this);
-        getServer().getPluginManager().registerEvents(new PlayerChatTab(), this);
     }
 
     @Override
